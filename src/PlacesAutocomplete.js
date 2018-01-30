@@ -291,7 +291,13 @@ class PlacesAutocomplete extends Component {
                   this.selectAddress(p.suggestion, p.placeId, e)
                 }
                 onTouchStart={() => this.setActiveItemAtIndex(p.index)}
-                onTouchEnd={e => this.selectAddress(p.suggestion, p.placeId, e)}
+                onTouchMove={() => this.setActiveItemAtIndex(null)}
+                onTouchEnd={(e) => {
+                  const activeItem = this.getActiveItem();
+                  if (activeItem !== undefined) {
+                    this.selectAddress(activeItem.suggestion, activeItem.placeId, e);
+                  }
+                }}
                 style={
                   p.active
                     ? this.inlineStyleFor(
